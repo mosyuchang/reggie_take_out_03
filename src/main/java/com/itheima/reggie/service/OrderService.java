@@ -13,4 +13,6 @@ import org.springframework.core.annotation.Order;
 public interface OrderService extends IService<Orders> {
 
     public void reserveOrder(Orders orders);
+
+    void submit(Orders orders);
 }

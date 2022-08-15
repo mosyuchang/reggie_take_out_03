@@ -7,9 +7,11 @@ import com.itheima.reggie.Dto.DishDto;
 import com.itheima.reggie.common.CustomException;
 import com.itheima.reggie.entity.Dish;
 import com.itheima.reggie.entity.DishFlavor;
+import com.itheima.reggie.entity.SetmealDish;
 import com.itheima.reggie.mapper.DishMapper;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
+import com.itheima.reggie.service.SetmealDishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private SetmealDishService setmealDishService;
     /**
      * 新增菜品同时保存对应的口味数据
      *
@@ -122,6 +127,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
      */
     @Override
     public void dishEnableOrDisable(String status, List<Long> ids) {
+
+        //判断菜品是否在套餐中销售
+
+        //更改状态
         UpdateWrapper<Dish> updateWrapper = new UpdateWrapper<>();
         if("1".equals(status)){
             updateWrapper.set(ids != null,"status",1).in("id",ids);
@@ -148,7 +157,8 @@ public class DishServiceImpl extends ServiceImpl<DishMapper,Dish> implements Dis
         }
         //删除菜品表中的菜品
         this.removeByIds(ids);
-        //还需删除菜品风味表中的菜品
+
+
 
 
 
